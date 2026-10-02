@@ -20,12 +20,12 @@ export const asyncHandler =
         };
 
 // Checks input against a schema. Bad input becomes a 400 that names the field
-export function parse<T extends z.ZodTypeAny>(schema: T, data: unknown): z.infer<T> {
+export function parse<T extends z.ZodTypeAny>(schema: T, data: unknown, status = 400): z.infer<T> {
     const result = schema.safeParse(data);
     if (!result.success) {
         const issue = result.error.issues[0];
         const field = issue.path.join(".");
-        throw new AppError(400, "VALIDATION_ERROR", field ? `${field}: ${issue.message}` : issue.message);
+        throw new AppError(status, "VALIDATION_ERROR", field ? `${field}: ${issue.message}` : issue.message);
     }
     return result.data;
 }

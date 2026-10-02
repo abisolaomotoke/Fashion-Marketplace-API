@@ -76,22 +76,35 @@ productsRouter.get(
   }),
 );
 
+const coloursQuery = z.object({
+  ...paginationShape,
+  colour: z.string().min(1, "colour must not be empty").optional(),
+  inStock: z.enum(["true", "false"]).optional(),
+  sort: z.enum(["colour", "stockQuantity"]).default("colour"),
+  order: z.enum(["asc", "desc"]).default("asc"),
+});
+
 // GET /api/v1/products/:id/colours
 productsRouter.get(
   "/:id/colours",
   asyncHandler(async (req, res) => {
     const id = parse(idSchema, req.params.id);
-    const q = parse(z.object(paginationShape), req.query);
+    const q = parse(coloursQuery, req.query);
 
     const product = await prisma.product.findUnique({ where: { id }, select: { id: true } });
     if (!product) throw new AppError(404, "NOT_FOUND", "Product not found");
 
-    const where = { productId: id };
+    const where = {
+      productId: id,
+      colour: q.colour ? { equals: q.colour, mode: "insensitive" as const } : undefined,
+      stockQuantity: q.inStock === undefined ? undefined : q.inStock === "true" ? { gt: 0 } : { equals: 0 },
+    };
+
     const [total, rows] = await prisma.$transaction([
       prisma.productColour.count({ where }),
       prisma.productColour.findMany({
         where,
-        orderBy: [{ colour: "asc" }, { id: "asc" }],
+        orderBy: [{ [q.sort]: q.order }, { id: "asc" }],
         skip: q.offset,
         take: q.limit,
         select: { id: true, productId: true, colour: true, stockQuantity: true },
@@ -101,5 +114,3 @@ productsRouter.get(
     res.json({ data: rows, meta: pageMeta(total, q.limit, q.offset, rows.length) });
   }),
 );
-
-export default productsRouter;
