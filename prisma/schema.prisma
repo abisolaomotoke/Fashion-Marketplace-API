@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductCategory {
+  bags
+  shoes
+  clothes
+  accessories
+}
+
+enum TargetAudience {
+  men
+  women
+  unisex
+}
+
+enum OrderStatus {
+  pending
+  paid
+  shipped
+  delivered
+  cancelled
+}
+
+model Seller {
+  id        String    @id @default(uuid()) @db.Uuid
+  storeName String
+  city      String
+  createdAt DateTime  @default(now())
+  products  Product[]
+
+  @@map("sellers")
+}
+
+model Product {
+  id               String          @id @default(uuid()) @db.Uuid
+  sellerId         String          @db.Uuid
+  seller           Seller          @relation(fields: [sellerId], references: [id])
+  name             String
+  imageUrl         String
+  category         ProductCategory
+  targetAudience   TargetAudience
+  price            Int
+  currency         String          @default("NGN")
+  sizeOrDimensions String
+  description      String
+  material         String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  colours          ProductColour[]
+
+  @@index([sellerId])
+  @@index([category, targetAudience])
+  @@index([price])
+  @@index([createdAt])
+  @@map("products")
+}
+
+model ProductColour {
+  id            String      @id @default(uuid()) @db.Uuid
+  productId     String      @db.Uuid
+  product       Product     @relation(fields: [productId], references: [id])
+  colour        String
+  stockQuantity Int
+  orderItems    OrderItem[]
+
+  @@unique([productId, colour])
+  @@map("product_colours")
+}
+
+model Customer {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  email     String   @unique
+  phone     String
+  createdAt DateTime @default(now())
+  orders    Order[]
+
+  @@map("customers")
+}
+
+model Order {
+  id              String      @id @default(uuid()) @db.Uuid
+  customerId      String      @db.Uuid
+  customer        Customer    @relation(fields: [customerId], references: [id])
+  status          OrderStatus @default(pending)
+  total           Int
+  currency        String      @default("NGN")
+  deliveryAddress String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  items           OrderItem[]
+
+  @@index([customerId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("orders")
+}
+
+model OrderItem {
+  id              String        @id @default(uuid()) @db.Uuid
+  orderId         String        @db.Uuid
+  order           Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productColourId String        @db.Uuid
+  productColour   ProductColour @relation(fields: [productColourId], references: [id])
+  productName     String
+  colourName      String
+  unitPrice       Int
+  quantity        Int
+
+  @@index([orderId])
+  @@index([productColourId])
+  @@map("order_items")
+}
