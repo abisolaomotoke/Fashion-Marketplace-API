@@ -9,6 +9,7 @@ import { customersRouter } from "./routes/customers";
 import { ordersRouter } from "./routes/orders";
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(express.json());
 
 app.get("/api/v1/health", (_req, res) => {
