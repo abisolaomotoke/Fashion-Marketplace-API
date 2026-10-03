@@ -3,3 +3,8 @@ export const config = {
     pagination: { defaultLimit: 20, maxLimit: 100 },
     rateLimit: { windowMs: 60_000, maxRequests: 100 },
 };
+
+export const rateLimitConfig = {
+    windowMs: 60_000, // 1 minute
+    maxRequests: 100,
+};

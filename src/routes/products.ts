@@ -6,7 +6,7 @@ import { idSchema, pageMeta, paginationShape } from "../pagination";
 
 export const productsRouter = Router();
 
-const listQuery = z
+export const listQuery = z
   .object({
     ...paginationShape,
     category: z.enum(["bags", "shoes", "clothes", "accessories"]).optional(),

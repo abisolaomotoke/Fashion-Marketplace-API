@@ -1,3 +1,4 @@
+import { listQuery as productListQuery } from "./products";
 import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../db";
@@ -49,5 +50,48 @@ sellersRouter.get(
         });
         if (!seller) throw new AppError(404, "NOT_FOUND", "Seller not found");
         res.json({ data: seller, meta: {} });
+    }),
+);
+
+// GET /api/v1/sellers/:id/products
+sellersRouter.get(
+    "/:id/products",
+    asyncHandler(async (req, res) => {
+        const id = parse(idSchema, req.params.id);
+        const seller = await prisma.seller.findUnique({ where: { id } });
+        if (!seller) throw new AppError(404, "NOT_FOUND", "Seller not found");
+
+        const q = parse(productListQuery, req.query);
+
+        const where = {
+            sellerId: id,
+            category: q.category,
+            targetAudience: q.targetAudience,
+            price: { gte: q.minPrice, lte: q.maxPrice },
+        };
+
+        const [total, rows] = await prisma.$transaction([
+            prisma.product.count({ where }),
+            prisma.product.findMany({
+                where,
+                orderBy: [{ [q.sort]: q.order }, { id: "asc" }],
+                skip: q.offset,
+                take: q.limit,
+                select: {
+                    id: true,
+                    sellerId: true,
+                    name: true,
+                    imageUrl: true,
+                    category: true,
+                    targetAudience: true,
+                    price: true,
+                    currency: true,
+                    sizeOrDimensions: true,
+                    colours: { select: { id: true, colour: true, stockQuantity: true } },
+                },
+            }),
+        ]);
+
+        res.json({ data: rows, meta: pageMeta(total, q.limit, q.offset, rows.length) });
     }),
 );

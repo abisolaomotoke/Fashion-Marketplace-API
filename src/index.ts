@@ -1,3 +1,4 @@
+import { checkRateLimit } from "./lib/rateLimit";
 import "dotenv/config";
 import express from "express";
 import { config } from "./config";
@@ -12,6 +13,17 @@ app.use(express.json());
 
 app.get("/api/v1/health", (_req, res) => {
     res.json({ data: { status: "ok" }, meta: {} });
+});
+
+app.use("/api/v1", (req, res, next) => {
+    const { limited, retryAfter } = checkRateLimit(req.ip ?? "local");
+    if (limited) {
+        res.set("Retry-After", String(retryAfter));
+        return res.status(429).json({
+            error: { code: "RATE_LIMITED", message: "Too many requests" },
+        });
+    }
+    next();
 });
 
 app.use("/api/v1/products", productsRouter);
