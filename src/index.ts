@@ -17,7 +17,9 @@ app.get("/api/v1/health", (_req, res) => {
 });
 
 app.use("/api/v1", (req, res, next) => {
+    console.log("RATE LIMIT IP:", req.ip);
     const { limited, retryAfter } = checkRateLimit(req.ip ?? "local");
+
     if (limited) {
         res.set("Retry-After", String(retryAfter));
         return res.status(429).json({
