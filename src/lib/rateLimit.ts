@@ -12,7 +12,7 @@ export function checkRateLimit(ip: string) {
     }
 
     entry.count += 1;
-    if (entry.count > rateLimitConfig.maxRequests) {
+        if (entry.count > rateLimitConfig.maxRequests) {
         return { limited: true, retryAfter: Math.ceil((entry.resetAt - now) / 1000) };
     }
     return { limited: false, retryAfter: 0 };
