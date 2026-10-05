@@ -2,7 +2,7 @@
 
 A public REST API that serves realistic fashion marketplace data: sellers, products, product colours, customers and orders. Anyone can call it from the internet.
 
-Live URL: _to be added after deployment_
+Live URL: https://fashion-marketplace-api-rmz4.onrender.com
 
 ## Resources
 
@@ -100,9 +100,14 @@ It follows the brief: no authentication for reading, no landing page, no admin p
 
 ## Base URL
 
-http://localhost:3000/api/v1
+https://fashion-marketplace-api-rmz4.onrender.com/api/v1
 
-(Replace with the live URL after deployment.)
+Try it:
+
+```bash
+curl "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/products?limit=2"
+```
+The API runs on a free plan, so the first request after a quiet period can take up to a minute.
 
 ## Endpoints
 
