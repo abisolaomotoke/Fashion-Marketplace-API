@@ -10,6 +10,13 @@ import { ordersRouter } from "./routes/orders";
 
 const app = express();
 app.set("trust proxy", 2);
+app.get("/debug-ip", (req, res) => {
+  res.json({
+    ip: req.ip,
+    ips: req.ips,
+    forwarded: req.headers["x-forwarded-for"],
+  });
+});
 app.use(express.json());
 
 app.get("/api/v1/health", (_req, res) => {
