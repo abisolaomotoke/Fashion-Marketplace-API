@@ -128,7 +128,7 @@ List products, paginated.
 **Request**
 
 ```bash
-curl "http://localhost:3000/api/v1/products?category=bags&limit=2"
+curl "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/products?category=bags&limit=2"
 ```
 
 **Response**
@@ -216,7 +216,7 @@ Get one full product.
 **Request**
 
 ```bash
-curl "http://localhost:3000/api/v1/products/b7a6d395-54b5-409c-8b63-b4baaa31f282"
+curl "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/products/b7a6d395-54b5-409c-8b63-b4baaa31f282"
 ```
 
 **Response**
@@ -228,7 +228,7 @@ curl "http://localhost:3000/api/v1/products/b7a6d395-54b5-409c-8b63-b4baaa31f282
 **Not found**
 
 ```bash
-curl -i "http://localhost:3000/api/v1/products/00000000-0000-0000-0000-000000000000"
+curl -i "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/products/00000000-0000-0000-0000-000000000000"
 ```
 
 ```json
@@ -250,7 +250,7 @@ List sellers, paginated.
 **Request**
 
 ```bash
-curl "http://localhost:3000/api/v1/sellers?limit=2"
+curl "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/sellers?limit=2"
 ```
 
 **Response**
@@ -266,7 +266,7 @@ Get one seller.
 **Request**
 
 ```bash
-curl "http://localhost:3000/api/v1/sellers/e40eeb83-b512-4f0f-aab0-e5d73c9db320"
+curl "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/sellers/e40eeb83-b512-4f0f-aab0-e5d73c9db320"
 ```
 
 **Response**
@@ -278,7 +278,7 @@ curl "http://localhost:3000/api/v1/sellers/e40eeb83-b512-4f0f-aab0-e5d73c9db320"
 **Not found**
 
 ```bash
-curl -i "http://localhost:3000/api/v1/sellers/00000000-0000-0000-0000-000000000000"
+curl -i "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/sellers/00000000-0000-0000-0000-000000000000"
 ```
 
 ```json
@@ -294,7 +294,7 @@ Takes the same query parameters as `GET /api/v1/products`.
 **Request**
 
 ```bash
-curl "http://localhost:3000/api/v1/sellers/aad2f1bc-c8e1-4216-bfb5-d2d85af24edb/products?limit=2"
+curl "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/sellers/aad2f1bc-c8e1-4216-bfb5-d2d85af24edb/products?limit=2"
 ```
 
 **Response**
@@ -319,7 +319,7 @@ List customers, paginated.
 **Request**
 
 ```bash
-curl "http://localhost:3000/api/v1/customers?limit=2"
+curl "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/customers?limit=2"
 ```
 
 **Response**
@@ -335,7 +335,7 @@ Get one customer.
 **Request**
 
 ```bash
-curl "http://localhost:3000/api/v1/customers/bf0cfcdc-d595-4585-828f-2d7c89cdbf04"
+curl "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/customers/bf0cfcdc-d595-4585-828f-2d7c89cdbf04"
 ```
 
 **Response**
@@ -347,7 +347,7 @@ curl "http://localhost:3000/api/v1/customers/bf0cfcdc-d595-4585-828f-2d7c89cdbf0
 **Not found**
 
 ```bash
-curl -i "http://localhost:3000/api/v1/customers/00000000-0000-0000-0000-000000000000"
+curl -i "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/customers/00000000-0000-0000-0000-000000000000"
 ```
 
 ```json
@@ -366,7 +366,7 @@ Create a customer.
 **Request**
 
 ```bash
-curl -X POST "http://localhost:3000/api/v1/customers" \
+curl -X POST "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/customers" \
   -H "Content-Type: application/json" \
   -d '{"name":"Ada Lovelace","email":"ada.readme@example.com","phone":"08012345678"}'
 ```
@@ -408,7 +408,7 @@ List orders, paginated.
 **Request**
 
 ```bash
-curl "http://localhost:3000/api/v1/orders?limit=2"
+curl "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/orders?limit=2"
 ```
 
 **Response**
@@ -424,7 +424,7 @@ Get one full order, with its items.
 **Request**
 
 ```bash
-curl "http://localhost:3000/api/v1/orders/YOUR-REAL-ORDER-ID"
+curl "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/orders/YOUR-REAL-ORDER-ID"
 ```
 
 **Response**
@@ -436,7 +436,7 @@ curl "http://localhost:3000/api/v1/orders/YOUR-REAL-ORDER-ID"
 **Not found**
 
 ```bash
-curl -i "http://localhost:3000/api/v1/orders/00000000-0000-0000-0000-000000000000"
+curl -i "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/orders/00000000-0000-0000-0000-000000000000"
 ```
 
 ```json
@@ -463,7 +463,7 @@ Each item:
 **Request**
 
 ```bash
-curl -X POST "http://localhost:3000/api/v1/orders" \
+curl -X POST "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/orders" \
   -H "Content-Type: application/json" \
   -d '{"customerId":"7843fabe-fea6-469c-a60c-1c04e7ae9892","deliveryAddress":"12 Allen Avenue, Ikeja, Lagos","items":[{"productColourId":"a68180c7-df50-4463-87a3-55c75a134b81","quantity":1}]}'
 ```
@@ -491,7 +491,7 @@ Update an order. Send only the fields you want to change.
 **Request**
 
 ```bash
-curl -X PATCH "http://localhost:3000/api/v1/orders/YOUR-REAL-ORDER-ID" \
+curl -X PATCH "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/orders/YOUR-REAL-ORDER-ID" \
   -H "Content-Type: application/json" \
   -d '{"status":"paid"}'
 ```
@@ -515,7 +515,7 @@ Delete an order.
 **Request**
 
 ```bash
-curl -i -X DELETE "http://localhost:3000/api/v1/orders/0de39090-20a7-4230-972d-29113b939ddd"
+curl -i -X DELETE "https://fashion-marketplace-api-rmz4.onrender.com/api/v1/orders/0de39090-20a7-4230-972d-29113b939ddd"
 ```
 
 **Response (204 No Content)**
