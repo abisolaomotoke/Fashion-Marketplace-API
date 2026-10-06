@@ -581,3 +581,22 @@ Prices are whole numbers in kobo, with a `currency` field beside them. The alter
 ### Why versioned paths
 Every path starts with `/api/v1`. If a field or route must change in a way that breaks clients, it can ship as `/api/v2` while `v1` keeps working.
 
+## Evidence
+
+- Live API: https://fashion-marketplace-api-rmz4.onrender.com
+- Paginated response on the live URL: 
+
+![paginated](docs/screenshots/paginated-live.png)
+
+
+- Rate limit 429 on the live URL: 
+
+![429](docs/screenshots/429-live.png)
+
+
+- Consumer app showing live data: 
+
+![consumer](docs/screenshots/consumer-live.png)
+
+
+- Seed script: [src/seed.ts](src/seed.ts)
