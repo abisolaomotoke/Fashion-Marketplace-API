@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/api/v1/health", (_req, res) => {
-    res.json({ data: { status: "ok" }, meta: {} });s
+    res.json({ data: { status: "ok" }, meta: {} });
 });
 
 app.use("/api/v1", (req, res, next) => {
