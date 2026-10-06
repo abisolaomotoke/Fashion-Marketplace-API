@@ -1,3 +1,4 @@
+import cors from "cors";
 import { checkRateLimit } from "./lib/rateLimit";
 import "dotenv/config";
 import express from "express";
@@ -10,10 +11,11 @@ import { ordersRouter } from "./routes/orders";
 
 const app = express();
 app.set("trust proxy", 3);
+app.use(cors());
 app.use(express.json());
 
 app.get("/api/v1/health", (_req, res) => {
-    res.json({ data: { status: "ok" }, meta: {} });
+    res.json({ data: { status: "ok" }, meta: {} });s
 });
 
 app.use("/api/v1", (req, res, next) => {
