@@ -39,6 +39,9 @@ app.use("/api/v1/orders", ordersRouter);
 // These two must stay last
 app.use(notFoundHandler);
 app.use(errorHandler);
+app.get("/", (req, res) => {
+    res.json({ name: "Fashion Marketplace API", status: "ok" });
+});
 
 app.listen(config.port, () => {
     console.log(`API running on port ${config.port}`);
